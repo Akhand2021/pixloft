@@ -21,6 +21,7 @@ class StoreTemplateRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->all());
         return [
             'title' => 'required|string|max:255|unique:templates',
             'description' => 'nullable|string',

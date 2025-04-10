@@ -10,37 +10,37 @@ import AppLogo from './app-logo';
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: '/admin/dashboard',
         icon: LayoutGrid,
     },
     {
         title: 'Categories',
-        href: '/categories',
+        href: '/admin/categories',
         icon: Tags,
     },
     {
         title: 'Collections',
-        href: '/collections',
+        href: '/admin/collections',
         icon: FolderOpen,
     },
     {
         title: 'Templates Types',
-        href: '/templates-types',
+        href: '/admin/templates-types',
         icon: Type,
     },
     {
         title: 'Templates',
-        href: '/templates',
+        href: '/admin/templates',
         icon: FileText,
     },
     {
         title: 'Orders',
-        href: '/orders',
+        href: '/admin/orders',
         icon: ShoppingCart,
     },
     {
         title: 'Downloads',
-        href: '/downloads',
+        href: '/admin/downloads',
         icon: Download,
     },
 ];
@@ -60,7 +60,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/dashboard" prefetch>
+                            <Link href="/admin/dashboard" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

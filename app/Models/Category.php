@@ -17,6 +17,8 @@ class Category extends Model
         'slug',
     ];
 
+    public $timestamps = true;
+
     /**
      * Boot the model.
      */
@@ -32,6 +34,13 @@ class Category extends Model
             if ($category->isDirty('name')) {
                 $category->slug = Str::slug($category->name);
             }
+        });
+    }
+    // In Category.php model
+    protected static function booted()
+    {
+        static::creating(function ($category) {
+            $category->slug = Str::slug($category->name);
         });
     }
 }

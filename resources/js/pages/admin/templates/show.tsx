@@ -63,31 +63,31 @@ export default function ShowTemplate({ template }: Props) {
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-2">
                             <Label>Title </Label>
-                            <Input value={template.title} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.title} disabled className="bg-gray-50 text-slate-950 text-lg font-bold" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>Description</Label>
-                            <Input value={template.description} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.description} disabled className="bg-gray-50 text-slate-950 text-lg font-bold" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>Price</Label>
-                            <Input value={template.price} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.price} disabled className="bg-gray-50 text-slate-950 text-lg font-bold" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>Category</Label>
-                            <Input value={template.category.name} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.category.name} disabled className="bg-gray-50 text-slate-950 text-lg font-bold" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>Collection</Label>
-                            <Input value={template.collection.name} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.collection.name} disabled className="bg-gray-50 text-slate-950 text-lg font-bold        " />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>Template Type</Label>
-                            <Input value={template.template_type?.name} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.template_type?.name} disabled className="bg-gray-50 text-slate-950 text-lg font-bold" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>File</Label>
-                            <Input value={template.file_path} disabled className="bg-gray-100 text-slate-950" />
+                            <Input value={template.file_path} disabled className="bg-gray-50 text-slate-950 text-lg font-bold" />
                         </div>
                         <div className="flex flex-col gap-2">
                             <Label>Preview Image</Label>

@@ -9,6 +9,8 @@ class TemplateType extends Model
 {
     protected $fillable = ['name', 'slug'];
 
+    public $timestamps = true;
+
     public function templates()
     {
         return $this->hasMany(Template::class);
@@ -31,6 +33,12 @@ class TemplateType extends Model
             if ($templateType->isDirty('name')) {
                 $templateType->slug = Str::slug($templateType->name);
             }
+        });
+    }
+    protected static function booted()
+    {
+        static::creating(function ($templateType) {
+            $templateType->slug = Str::slug($templateType->name);
         });
     }
 }

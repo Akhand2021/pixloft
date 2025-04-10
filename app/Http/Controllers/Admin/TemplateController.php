@@ -138,11 +138,19 @@ class TemplateController extends Controller
             
             $template->update($data);
 
+            // Include debug data in the response if it exists
+            $debugData = session('debug_request_data');
+            $message = 'Template updated successfully.';
+            
+            if ($debugData) {
+                $message .= ' Debug data: ' . json_encode($debugData);
+            }
+
             return redirect()->route('admin.templates.index')
-                ->with('status', ['type' => 'success', 'message' => 'Template updated successfully.']);
+                ->with('status', ['type' => 'success', 'message' => $message]);
         } catch (\Exception $e) {
             return redirect()->route('admin.templates.index')
-                ->with('status', ['type' => 'error', 'message' => 'Failed to update template.']);
+                ->with('status', ['type' => 'error', 'message' => 'Failed to update template: ' . $e->getMessage()]);
         }
     }
 

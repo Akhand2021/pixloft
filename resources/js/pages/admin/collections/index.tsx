@@ -83,7 +83,7 @@ export default function CollectionsIndex({ collections }: Props) {
                                         <TableCell>{collection.name}</TableCell>
                                         <TableCell>{collection.slug}</TableCell>
                                         <TableCell>{collection.description}</TableCell>
-                                        <TableCell>{new Date(collection.created_at).toLocaleDateString()}</TableCell>
+                                        <TableCell>{new Date(collection.created_at).toDateString()}</TableCell>
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-2">
                                                 <Button variant="outline" size="icon" asChild>

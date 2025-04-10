@@ -18,7 +18,6 @@ class CollectionController extends Controller
     public function index()
     {
         $collections = Collection::latest()->get();
-
         return Inertia::render('admin/collections/index', [
             'collections' => $collections,
         ]);
@@ -45,10 +44,10 @@ class CollectionController extends Controller
 
             $collection = Collection::create($request->only('name', 'description'));
 
-            return redirect()->route('collections')
+            return redirect()->route('admin.collections.index')
                 ->with('status', ['type' => 'success', 'message' => 'Collection created successfully.']);
         } catch (\Exception $e) {
-            return redirect()->route('collections')
+            return redirect()->route('admin.collections.index')
                 ->with('status', ['type' => 'error', 'message' => 'Failed to create collection.']);
         }
     }

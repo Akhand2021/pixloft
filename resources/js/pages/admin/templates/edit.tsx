@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import AppLayout from "@/layouts/app-layout";
 import { useForm } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { type BreadcrumbItem } from '@/types';
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -14,6 +15,7 @@ import {
     SelectContent,
     SelectItem
 } from "@/components/ui/select";
+import { CloudCog } from "lucide-react";
 
 interface Template {
     id: number;
@@ -30,7 +32,6 @@ interface Template {
     preview_image: File | null;
 }
 
-
 interface Category {
     id: number;
     name: string;
@@ -46,6 +47,17 @@ interface TemplateType {
     name: string;
 }
 
+interface FormData {
+    title: string;
+    description: string;
+    price: number;
+    category_id: number;
+    collection_id: number;
+    template_type_id: number;
+    file: File | null;
+    preview_image: File | null;
+    [key: string]: string | number | File | null;
+}
 
 interface Props {
     template: Template;
@@ -53,8 +65,6 @@ interface Props {
     collections: Collection[];
     templateTypes: TemplateType[];
 }
-
-
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -68,23 +78,50 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function EditTemplate({ template, categories, collections, templateTypes }: Props) {
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, processing, errors } = useForm<FormData>({
         title: template.title,
         description: template.description,
         price: template.price,
         category_id: template.category_id,
         collection_id: template.collection_id,
         template_type_id: template.template_type_id,
-        category: template.category,
-        collection: template.collection,
-        template_type: template.template_type,
         file: null,
         preview_image: null,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        put('/admin/templates/' + template.id, { forceFormData: true, });
+        
+        const formData = new FormData();
+        if (data.title){
+         formData.append('title', data.title);
+        }else{
+            console.log('no title')
+        }
+        if (data.description) formData.append('description', data.description);
+        if (data.price) formData.append('price', String(data.price));
+        if (data.category_id) formData.append('category_id', String(data.category_id));
+        if (data.collection_id) formData.append('collection_id', String(data.collection_id));
+        if (data.template_type_id) formData.append('template_type_id', String(data.template_type_id));
+        
+        if (data.file) formData.append('file', data.file);
+        if (data.preview_image) formData.append('preview_image', data.preview_image);
+
+        formData.append('_method', 'PUT');
+        
+        router.post(`/admin/templates/${template.id}`, formData, {
+            forceFormData: true,
+            preserveScroll: true
+        });
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'file' | 'preview_image') => {
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setData(field, file);
+        } else {
+            setData(field, null);
+        }
     };
 
     return (
@@ -97,14 +134,14 @@ export default function EditTemplate({ template, categories, collections, templa
                     </CardHeader>
 
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4" encType="multipart/form-data">
                             <div className="space-y-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="title">Title</Label>
                                     <Input
                                         id="title"
                                         type="text"
-                                        value={data.title}
+                                        value={String(data.title || '')}
                                         onChange={(e) => setData('title', e.target.value)}
                                         className="w-full"
                                     />
@@ -118,7 +155,7 @@ export default function EditTemplate({ template, categories, collections, templa
                                 <Label htmlFor="description">Description</Label>
                                 <Textarea
                                     id="description"
-                                    value={data.description}
+                                    value={String(data.description || '')}
                                     onChange={(e) => setData('description', e.target.value)}
                                     className="w-full"
                                 />
@@ -132,7 +169,7 @@ export default function EditTemplate({ template, categories, collections, templa
                                 <Input
                                     id="price"
                                     type="number"
-                                    value={data.price}
+                                    value={Number(data.price || 0)}
                                     onChange={(e) => setData('price', parseFloat(e.target.value))}
                                     className="w-full"
                                 />
@@ -144,27 +181,31 @@ export default function EditTemplate({ template, categories, collections, templa
                             <div className="space-y-2">
                                 <Label htmlFor="category_id">Category</Label>
                                 <Select
-                                    id="category_id"
-                                    value={data.category_id}
+                                    value={String(data.category_id || '')}
                                     onValueChange={(value) => setData('category_id', parseInt(value))}
                                 >
                                     <SelectTrigger>
+                                        <SelectValue placeholder="Select a category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
                                         {categories && categories.length > 0 ? (
                                             categories.map((category) => (
-                                                <SelectValue key={category.id} value={category.id} selected={category.id === data.category_id ? 'selected' : ''}>{category.name}</SelectValue>
+                                                <SelectItem key={category.id} value={String(category.id)}>
+                                                    {category.name}
+                                                </SelectItem>
                                             ))
                                         ) : (
-                                            <SelectValue placeholder="Select a category" />
+                                            <SelectItem disabled value="">No categories found</SelectItem>
                                         )}
-                                    </SelectTrigger>
+                                    </SelectContent>
                                 </Select>
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="collection_id" data={data.collection_id}>Collection</Label>
+                                <Label htmlFor="collection_id">Collection</Label>
                                 <Select
-                                    value={data.collection_id?.toString()}
-                                    onValueChange={(value) => setData("collection_id", value)}
+                                    value={String(data.collection_id || '')}
+                                    onValueChange={(value) => setData("collection_id", parseInt(value))}
                                 >
                                     <SelectTrigger>
                                         <SelectValue placeholder="Select a collection" />
@@ -181,14 +222,12 @@ export default function EditTemplate({ template, categories, collections, templa
                                         )}
                                     </SelectContent>
                                 </Select>
-
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="template_type_id">Template Type</Label>
                                 <Select
-                                    id="template_type_id"
-                                    value={data.template_type_id}
+                                    value={String(data.template_type_id || '')}
                                     onValueChange={(value) => setData('template_type_id', parseInt(value))}
                                 >
                                     <SelectTrigger>
@@ -197,10 +236,12 @@ export default function EditTemplate({ template, categories, collections, templa
                                     <SelectContent>
                                         {templateTypes && templateTypes.length > 0 ? (
                                             templateTypes.map((templateType) => (
-                                                <SelectItem key={templateType.id} value={templateType.id} selected={templateType.id === data.template_type_id ? 'selected' : ''}>{templateType.name}</SelectItem>
+                                                <SelectItem key={templateType.id} value={String(templateType.id)}>
+                                                    {templateType.name}
+                                                </SelectItem>
                                             ))
                                         ) : (
-                                            <SelectItem placeholder="Select a template type" > Select a template type </SelectItem>
+                                            <SelectItem disabled value="">No template types found</SelectItem>
                                         )}
                                     </SelectContent>
                                 </Select>
@@ -211,7 +252,8 @@ export default function EditTemplate({ template, categories, collections, templa
                                 <Input
                                     id="file"
                                     type="file"
-                                    onChange={(e) => setData('file', e.target.files?.[0] || null)}
+                                    accept=".zip"
+                                    onChange={(e) => handleFileChange(e, 'file')}
                                     className="w-full"
                                 />
                                 {errors.file && (
@@ -224,11 +266,15 @@ export default function EditTemplate({ template, categories, collections, templa
                                 <Input
                                     id="preview_image"
                                     type="file"
-                                    onChange={(e) => setData('preview_image', e.target.files?.[0] || null)}
+                                    accept="image/*"
+                                    onChange={(e) => handleFileChange(e, 'preview_image')}
                                     className="w-full"
                                 />
                                 {errors.preview_image && (
                                     <p className="text-sm text-destructive">{errors.preview_image}</p>
+                                )}
+                                {template.preview_image && (
+                                    <img src={`/storage/${template.preview_image}`} className="h-40 object-cover" alt="Preview" />
                                 )}
                             </div>
                             <div className="flex justify-end gap-2">

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class UpdateTemplateRequest extends FormRequest
@@ -22,7 +23,7 @@ class UpdateTemplateRequest extends FormRequest
      */
     public function rules(): array
     {
-        dd($this->all());
+        
         return [
             'title' => ['required', 'string', 'max:255', Rule::unique('templates')->ignore($this->template)],
             'description' => 'nullable|string',
