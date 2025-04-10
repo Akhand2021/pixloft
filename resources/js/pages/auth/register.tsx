@@ -32,87 +32,109 @@ export default function Register() {
     };
 
     return (
-        <AuthLayout title="Create an account" description="Enter your details below to create your account">
+        <AuthLayout
+            title="Create your account"
+            description="Sign up to access your dashboard and features."
+        >
             <Head title="Register" />
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="name">Name</Label>
+
+            <form className="space-y-6" onSubmit={submit}>
+                <div className="space-y-4">
+                    {/* Name */}
+                    <div>
+                        <Label htmlFor="name" className="text-gray-700 dark:text-white">
+                            Name
+                        </Label>
                         <Input
                             id="name"
                             type="text"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="name"
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
+                            autoComplete="name"
+                            required
                             disabled={processing}
-                            placeholder="Full name"
+                            placeholder="John Doe"
+                            className="focus:border-gray-500 border-gray-100 focus:ring-gray-500 border-gray-100"
                         />
-                        <InputError message={errors.name} className="mt-2" />
+                        <InputError message={errors.name} className="mt-1" />
                     </div>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+                    {/* Email */}
+                    <div>
+                        <Label htmlFor="email" className="text-gray-700 dark:text-white">
+                            Email
+                        </Label>
                         <Input
                             id="email"
                             type="email"
-                            required
-                            tabIndex={2}
-                            autoComplete="email"
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
+                            autoComplete="email"
+                            required
                             disabled={processing}
-                            placeholder="email@example.com"
+                            placeholder="you@example.com"
+                            className="focus:border-gray-500  focus:ring-gray-500 border-gray-100"
                         />
-                        <InputError message={errors.email} />
+                        <InputError message={errors.email} className="mt-1" />
                     </div>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                    {/* Password */}
+                    <div>
+                        <Label htmlFor="password" className="text-gray-700 dark:text-white">
+                            Password
+                        </Label>
                         <Input
                             id="password"
                             type="password"
-                            required
-                            tabIndex={3}
-                            autoComplete="new-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
+                            autoComplete="new-password"
+                            required
                             disabled={processing}
-                            placeholder="Password"
+                            placeholder="••••••••"
+                            className="focus:border-gray-500  focus:ring-gray-500 border-gray-100"
                         />
-                        <InputError message={errors.password} />
+                        <InputError message={errors.password} className="mt-1" />
                     </div>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Confirm password</Label>
+                    {/* Confirm Password */}
+                    <div>
+                        <Label htmlFor="password_confirmation" className="text-gray-700 dark:text-white">
+                            Confirm Password
+                        </Label>
                         <Input
                             id="password_confirmation"
                             type="password"
-                            required
-                            tabIndex={4}
-                            autoComplete="new-password"
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
+                            autoComplete="new-password"
+                            required
                             disabled={processing}
-                            placeholder="Confirm password"
+                            placeholder="Re-enter your password"
+                            className="focus:border-gray-500  focus:ring-gray-500 border-gray-100"
                         />
-                        <InputError message={errors.password_confirmation} />
+                        <InputError message={errors.password_confirmation} className="mt-1" />
                     </div>
-
-                    <Button type="submit" className="mt-2 w-full" tabIndex={5} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Create account
-                    </Button>
                 </div>
 
-                <div className="text-muted-foreground text-center text-sm">
+                <Button
+                    type="submit"
+                    className="w-full text-white bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 mt-2"
+                    disabled={processing}
+                >
+                    {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
+                    Create Account
+                </Button>
+
+                <p className="text-sm text-center text-white">
                     Already have an account?{' '}
-                    <TextLink href={route('login')} tabIndex={6}>
+                    <TextLink
+                        href={route('login')}
+                        className="text-gray-700 hover:underline dark:text-white"
+                    >
                         Log in
                     </TextLink>
-                </div>
+                </p>
             </form>
         </AuthLayout>
     );

@@ -5,10 +5,10 @@ export default function WelcomeHeader() {
     const { auth } = usePage<SharedData>().props;
 
     return (
-        <nav className="container mx-auto px-4 py-6">
+        <nav className=" mx-auto px-4 py-6 dark:bg-gray-800 dark:border-gray-700">
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                    <a href={'/'} className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">PixLoft</a>
+                    <Link href={'/'} className="text-2xl font-bold text-indigo-600 dark:text-indigo-400"><img src="/logo.png" alt="PixLoft" width={100} height={100} className="" /></Link>
                 </div>
                 <div className="hidden md:flex items-center space-x-8">
                     <Link href={route('collections')} className="text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400">

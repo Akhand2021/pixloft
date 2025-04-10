@@ -20,12 +20,14 @@ interface Props {
 export default function CategoryIndex({ categories }: Props) {
     return (
         <>
+
+            <WelcomeHeader />
             <Head title="Categories" />
-            <div className="bg-slate-900 min-h-screen text-white">
+            <div className="relative isolate overflow-hidden bg-slate-100 dark:bg-slate-900 py-24 sm:py-32 lg:px-0">
                 {/* Hero Header */}
                 <section className="px-6 py-12 text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight mb-2">Discover Product Categories</h1>
-                    <p className="text-slate-300 text-lg max-w-2xl mx-auto">
+                    <p className="text-gray-500 text-lg max-w-2xl mx-auto">
                         Browse through curated collections of templates crafted to boost your next project.
                     </p>
                 </section>
@@ -36,7 +38,7 @@ export default function CategoryIndex({ categories }: Props) {
                         {categories.map((category) => (
                             <div
                                 key={category.id}
-                                className="bg-slate-800 hover:bg-slate-700 transition-all rounded-xl overflow-hidden shadow-lg flex flex-col justify-between"
+                                className="dark:bg-slate-800 dark:hover:bg-slate-700 transition-all rounded-xl overflow-hidden shadow-lg flex flex-col justify-between"
                             >
                                 <div className="p-5">
                                     <h2 className="text-xl font-semibold mb-2">{category.name}</h2>
@@ -58,9 +60,8 @@ export default function CategoryIndex({ categories }: Props) {
                         ))}
                     </div>
                 </section>
-
-                <WelcomeFooter />
             </div>
+            <WelcomeFooter />
         </>
     );
 }

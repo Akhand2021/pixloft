@@ -20,11 +20,9 @@ interface Props {
 export default function TemplatesIndex({ templates }: Props) {
     return (
         <>
-
+            <WelcomeHeader />
             <Head title="Templates" />
-
-            <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-                <WelcomeHeader />
+            <div className="relative isolate overflow-hidden bg-slate-100 dark:bg-slate-900 py-24 sm:py-32 lg:px-0">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="text-center">
                         <h1 className="text-4xl font-bold text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
@@ -34,26 +32,25 @@ export default function TemplatesIndex({ templates }: Props) {
                             Browse our collection of high-quality templates for your next project
                         </p>
                     </div>
-
                     <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {templates.map((template) => (
-                            <Link 
-                                key={template.id} 
+                            <Link
+                                key={template.id}
                                 href={`/templates/${template.slug}`}
                                 className="group"
                             >
                                 <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition duration-500 hover:scale-105">
                                     {template.preview_image ? (
-                                        <img 
-                                            src={`storage/${template.preview_image}`} 
-                                            alt={template.title} 
+                                        <img
+                                            src={`storage/${template.preview_image}`}
+                                            alt={template.title}
                                             className="w-full h-48 object-cover"
                                         />
                                     ) : (
                                         <div className="aspect-w-16 aspect-h-9 bg-gradient-to-r from-blue-500 to-indigo-600" />
                                     )}
                                     <div className="p-6">
-                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600">
+                                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-600">
                                             {template.title}
                                         </h3>
                                         <p className="mt-2 text-gray-500 dark:text-gray-400">
@@ -73,8 +70,8 @@ export default function TemplatesIndex({ templates }: Props) {
                         ))}
                     </div>
                 </div>
-                <WelcomeFooter />
             </div>
+            <WelcomeFooter />
         </>
     );
 } 

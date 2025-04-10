@@ -1,18 +1,20 @@
 import { Link } from '@inertiajs/react';
 
+
 export default function WelcomeFooter() {
     return (
-        <footer className="bg-gray-800 py-12 text-gray-300">
+        <footer className="dark:bg-gray-800 py-12 dark:text-gray-300 dark:border-gray-700">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
                     <div>
-                        <h3 className="mb-4 text-xl font-bold text-white">PixLoft</h3>
+                        {/* <h3 className="mb-4 text-xl font-bold dark:text-white">PixLoft</h3> */}
+                        <img src="/logo.png" alt="PixLoft" width={100} height={100} className="" />
                         <p className="text-sm">
                             Premium templates marketplace for creative professionals and businesses.
                         </p>
                     </div>
                     <div>
-                        <h4 className="mb-4 text-lg font-semibold text-white">Quick Links</h4>
+                        <h4 className="mb-4 text-lg font-semibold dark:text-white">Quick Links</h4>
                         <ul className="space-y-2">
                             <li>
                                 <Link href={route('templates')} className="hover:text-indigo-400">

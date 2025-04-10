@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@inertiajs/react";
 import WelcomeHeader from '@/components/welcome/header';
 import WelcomeFooter from '@/components/welcome/footer';
+import { router } from '@inertiajs/react';
 
 interface Order {
     id: number;
@@ -25,11 +26,14 @@ interface Props {
 }
 
 export default function DashboardIndex({ user, orders }: Props) {
+    const handleLogout = () => {
+        router.post('/logout');
+    }
     return (
         <>
-            <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <WelcomeHeader />
+            <Head title="Dashboard" />
+            <div className="relative isolate overflow-hidden bg-slate-100 dark:bg-slate-900 py-24 sm:py-32 lg:px-0">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <Card>
                         <CardHeader>
@@ -41,6 +45,10 @@ export default function DashboardIndex({ user, orders }: Props) {
                                 <p><strong>Email:</strong> {user.email}</p>
                                 <Button asChild>
                                     <Link href="/profile">Edit Profile</Link>
+                                </Button>
+
+                                <Button  className="mt-2 mx-2" onClick={handleLogout}>
+                                    Logout
                                 </Button>
                             </div>
                         </CardContent>

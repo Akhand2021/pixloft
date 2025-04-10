@@ -85,7 +85,7 @@ class CollectionController extends Controller
 
             $collection->update($request->only('name', 'description'));
 
-            return redirect()->route('collections')
+            return redirect()->route('admin.collections.index')
                 ->with('status', ['type' => 'success', 'message' => 'Collection updated successfully.']);
         } catch (\Exception $e) {
             return redirect()->route('collections')

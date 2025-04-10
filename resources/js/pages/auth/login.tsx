@@ -36,75 +36,101 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
+        <AuthLayout title="Sign in to your account" description="Welcome back! Please enter your credentials.">
+            <Head title="Login" />
 
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
+            <form onSubmit={submit} className="space-y-6">
+                <div className="space-y-4">
+                    {/* Email */}
+                    <div>
+                        <Label htmlFor="email" className="text-gray-700 dark:text-white">
+                            Email
+                        </Label>
                         <Input
                             id="email"
                             type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
+                            autoComplete="email"
+                            autoFocus
+                            required
+                            className="focus:border-gray-500  focus:ring-gray-500 border-gray-100"
+                            placeholder="you@example.com"
                         />
                         <InputError message={errors.email} />
                     </div>
 
-                    <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
+                    {/* Password */}
+                    <div>
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="password" className="text-gray-700 dark:text-white">
+                                Password
+                            </Label>
                             {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    Forgot password?
+                                <TextLink
+                                    href={route('password.request')}
+                                    className="text-sm text-gray-500 hover:text-gray-500 dark:text-white dark:hover:text-gray-300"
+                                >
+                                    Forgot?
                                 </TextLink>
                             )}
                         </div>
                         <Input
                             id="password"
                             type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
+                            autoComplete="current-password"
+                            required
+                            className="focus:border-gray-500  focus:ring-gray-500 border-gray-100"
+                            placeholder="••••••••"
                         />
                         <InputError message={errors.password} />
                     </div>
 
+                    {/* Remember me */}
                     <div className="flex items-center space-x-3">
                         <Checkbox
                             id="remember"
                             name="remember"
                             checked={data.remember}
                             onClick={() => setData('remember', !data.remember)}
-                            tabIndex={3}
+                            className="border-geay-400 text-gray-600"
                         />
-                        <Label htmlFor="remember">Remember me</Label>
+                        <Label htmlFor="remember" className="text-sm text-muted-foreground">
+                            Remember me
+                        </Label>
                     </div>
-
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Log in
-                    </Button>
                 </div>
 
-                <div className="text-muted-foreground text-center text-sm">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
+                {/* Submit button */}
+                <Button
+                    type="submit"
+                    className="w-full bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 dark:text-white"
+                    disabled={processing}
+                >
+                    {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
+                    Log in
+                </Button>
+
+                {/* Status message */}
+                {status && (
+                    <div className="text-sm text-center text-green-600 font-medium bg-green-100 dark:bg-green-900/30 py-2 rounded">
+                        {status}
+                    </div>
+                )}
+
+                {/* Register prompt */}
+                <p className="text-sm text-center text-gray-400">
+                    Don’t have an account?{' '}
+                    <TextLink
+                        href={route('register')}
+                        className="text-gray-600 hover:underline dark:text-white"
+                    >
                         Sign up
                     </TextLink>
-                </div>
+                </p>
             </form>
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
         </AuthLayout>
     );
 }
